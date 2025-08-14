@@ -9,7 +9,7 @@
 Результат выполнения: 
 
 java -jar target/ticketmaster-1.0-SNAPSHOT.jar "HOME_PATH/src/main/resources/tickets.json"
-Минимальное время полета по авиакомпаниям:
+Минимальное время полета по авиакомпаниям: <br />
 SU: 13:00 <br />
 S7: 13:30 <br />
 TK: 12:50 <br />
