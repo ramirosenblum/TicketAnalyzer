@@ -8,12 +8,12 @@
 
 Результат выполнения: 
 
-java -jar target/ticketmaster-1.0-SNAPSHOT.jar "/Users/ramirozenblium/IdeaProjects/ticketmaster/src/main/resources/tickets.json"
+java -jar target/ticketmaster-1.0-SNAPSHOT.jar "HOME_PATH/src/main/resources/tickets.json"
 Минимальное время полета по авиакомпаниям:
-SU: 13:00
-S7: 13:30
-TK: 12:50
-BA: 15:05
+SU: 13:00 <br />
+S7: 13:30 <br />
+TK: 12:50 <br />
+BA: 15:05 <br />
 
 Разница между средней ценой и медианой:
 Средняя цена: 13960.0 руб.
