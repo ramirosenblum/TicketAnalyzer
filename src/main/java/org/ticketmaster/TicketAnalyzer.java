@@ -142,14 +142,13 @@ public class TicketAnalyzer {
         }
     }
 
-    private static long getMedianFlightTime(List<Long> listOfFlightTime) {
+    private static double getMedianFlightTime(List<Long> listOfFlightTime) {
         List<Long> listOfFlightTimeSorted = listOfFlightTime.stream().sorted().toList();
         int middle = listOfFlightTimeSorted.size() / 2;
 
         if (listOfFlightTimeSorted.size() % 2 == 0) {
-            return (long) ((listOfFlightTimeSorted.get(middle - 1) + listOfFlightTimeSorted.get(middle)) / 2.0);
+            return ((listOfFlightTimeSorted.get(middle - 1) + listOfFlightTimeSorted.get(middle)) / 2.0);
         } else {
-
             return listOfFlightTimeSorted.get(middle);
         }
     }
