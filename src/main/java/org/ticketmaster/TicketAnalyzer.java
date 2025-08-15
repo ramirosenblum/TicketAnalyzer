@@ -1,4 +1,4 @@
-package org.example;
+package org.ticketmaster;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,6 +20,9 @@ import java.util.Map;
 
 public class TicketAnalyzer {
     public static void main(String[] args) throws IOException, ParseException {
+        if(args.length <1){
+            return;
+        }
         JSONArray tickets = getJsonArray(args[0]);
         Map<String, Long> minFlightTimesForCarriers = getMinFlightTimeGroupByCarrierFromTickets(tickets);
 
@@ -32,7 +35,7 @@ public class TicketAnalyzer {
         List<Long> prices = getPricesFromTickets(tickets);
 
         double avgPrice = prices.stream().mapToInt(Long::intValue).average().orElse(0);
-        double medianPrice = getPercentileFlightTime(50, prices);
+        double medianPrice = getMedianFlightTime(prices);
         double diff = avgPrice - medianPrice;
 
         System.out.println("\nРазница между средней ценой и медианой:");
@@ -100,11 +103,13 @@ public class TicketAnalyzer {
     private static Duration getFlightTimeFromTicket(JSONObject ticket) {
         String departureTime = (String) ticket.get("departure_time");
         String departureDate = (String) ticket.get("departure_date");
+
         String arrivalTime = (String) ticket.get("arrival_time");
         String arrivalDate = (String) ticket.get("arrival_date");
 
         LocalTime dT = LocalTime.parse(checkTimeFormat(departureTime));
         LocalDate dD = parseDate(departureDate);
+
         LocalTime aT = LocalTime.parse(checkTimeFormat(arrivalTime));
         LocalDate aD = parseDate(arrivalDate);
 
@@ -137,9 +142,15 @@ public class TicketAnalyzer {
         }
     }
 
-    private static long getPercentileFlightTime(int percentile, List<Long> listOfFlightTime) {
+    private static long getMedianFlightTime(List<Long> listOfFlightTime) {
         List<Long> listOfFlightTimeSorted = listOfFlightTime.stream().sorted().toList();
-        double k = listOfFlightTime.size() * percentile / 100;
-        return listOfFlightTimeSorted.get((int) Math.ceil(k));
+        int middle = listOfFlightTimeSorted.size() / 2;
+
+        if (listOfFlightTimeSorted.size() % 2 == 0) {
+            return (long) ((listOfFlightTimeSorted.get(middle - 1) + listOfFlightTimeSorted.get(middle)) / 2.0);
+        } else {
+
+            return listOfFlightTimeSorted.get(middle);
+        }
     }
 }
